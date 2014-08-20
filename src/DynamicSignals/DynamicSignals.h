@@ -18,8 +18,9 @@
 
 namespace DynamicSignals
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const char *pBaseName, const int ID, const char *pSigName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const char *pBaseName1, const char *pBaseName2, int ID, const char *pSigName );
+    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
+    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
+    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
 }
 
 #endif

@@ -28,13 +28,13 @@
 namespace DynamicSignals
 {
     simsignal_t
-    InternalRegisterDynamicSignal( cModule *pModule, std::string SigName, std::string StatisticName, const char *pSigName )
+    InternalRegisterDynamicSignal( cModule *pModule, const std::string SigName, const std::string StatisticName, const std::string TemplateName )
     {
         simsignal_t     signal_id;
         cProperty       *pStatTempProp;
 
         signal_id       = pModule->registerSignal( SigName.c_str() );
-        pStatTempProp   = pModule->getProperties()->get( "statisticTemplate", pSigName );
+        pStatTempProp   = pModule->getProperties()->get( "statisticTemplate", TemplateName.c_str() );
 
         ev.addResultRecorders( pModule, signal_id, StatisticName.c_str(), pStatTempProp );
 
@@ -42,29 +42,29 @@ namespace DynamicSignals
     }
 
     simsignal_t
-    RegisterDynamicSignal( cModule *pModule, const char *pBaseName, const int ID, const char *pSigName )
+    RegisterDynamicSignal( cModule *pModule, const std::string BaseName, const std::string SigName, const std::string TemplateName )
     {
-        std::stringstream ss;
+        std::string SignalName  = BaseName + "_" + SigName;
 
-        ss << pBaseName << "_" << ID << "_" << pSigName;
-
-        std::string SigName         = ss.str();
-        std::string StatisticName   = SigName;
-
-        return  InternalRegisterDynamicSignal( pModule, SigName, StatisticName, pSigName );
+        return  InternalRegisterDynamicSignal( pModule, SignalName, SignalName, TemplateName );
     }
 
     simsignal_t
-    RegisterDynamicSignal( cModule *pModule, const char *pBaseName1, const char *pBaseName2, int ID, const char *pSigName )
+    RegisterDynamicSignal( cModule *pModule, const std::string BaseName, const int ID, const std::string SigName, const std::string TemplateName )
     {
         std::stringstream ss;
 
-        ss << pBaseName1 << "_" << pBaseName2 << "_" << pSigName;
+        ss << BaseName << "_" << ID << "_" << SigName;
 
-        std::string SigName         = ss.str();
-        std::string StatisticName   = SigName;
+        return  InternalRegisterDynamicSignal( pModule, ss.str(), ss.str(), TemplateName );
+    }
 
-        return  InternalRegisterDynamicSignal( pModule, SigName, StatisticName, pSigName );
+    simsignal_t
+    RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName )
+    {
+        std::string SignalName  = BaseName1 + "_" + BaseName2 + "_" + SigName;
+
+        return  InternalRegisterDynamicSignal( pModule, SignalName, SignalName, TemplateName );
     }
 }
 
