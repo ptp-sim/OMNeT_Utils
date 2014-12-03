@@ -49,10 +49,7 @@ cModuleInitBase::initialize( int stage )
         case INIT_INTERNAL_STATE:           InitInternalState();        break;
         case INIT_SIGNALS:                  InitSignals();              break;
         case FINISH_INIT:                   FinishInit();               break;
-        case DEBUG_OUTPUT:                  if( GetEnableDebugOutput() )
-                                            {
-                                                PrintDebugOutput();
-                                            }
+        case DEBUG_OUTPUT:                  PrintDebugOutput();
                                             break;
     }
 
@@ -81,10 +78,7 @@ cInitBase::initialize( int stage )
         case INIT_INTERNAL_STATE:           InitInternalState();        break;
         case INIT_SIGNALS:                  InitSignals();              break;
         case FINISH_INIT:                   FinishInit();               break;
-        case DEBUG_OUTPUT:                  if( GetEnableDebugOutput() )
-                                            {
-                                                PrintDebugOutput();
-                                            }
+        case DEBUG_OUTPUT:                  PrintDebugOutput();
                                             break;
     }
 

@@ -31,7 +31,98 @@ InitStage_t;
 // Declarations
 // ======================================================
 
-class cModuleInitBase : public cSimpleModule
+/*
+
+// Init API
+void    ParseResourceParameters();
+void    AllocateResources();
+void    InitHierarchy();
+void    ParseParameters();
+void    RegisterSignals();
+void    InitInternalState();
+void    InitSignals();
+void    FinishInit();
+void    PrintDebugOutput();
+
+void    ForwardInit( int stage );
+
+// ------------------------------------------------------
+// Initialize
+// ------------------------------------------------------
+void
+cDummyModule::ParseResourceParameters()
+{
+}
+
+void
+cDummyModule::AllocateResources()
+{
+}
+
+void
+cDummyModule::InitHierarchy()
+{
+}
+
+void
+cDummyModule::ParseParameters()
+{
+}
+
+void
+cDummyModule::RegisterSignals()
+{
+}
+
+void
+cDummyModule::InitInternalState()
+{
+}
+
+void
+cDummyModule::InitSignals()
+{
+}
+
+void
+cDummyModule::FinishInit()
+{
+}
+
+void
+cDummyModule::PrintDebugOutput()
+{
+}
+
+void
+cDummyModule::ForwardInit( int stage )
+{
+}
+
+// ------------------------------------------------------
+// Handle messages
+// ------------------------------------------------------
+
+*/
+
+class cInitAPI
+{
+    protected:
+
+        // Initialization API
+        virtual void    ParseResourceParameters()   {};
+        virtual void    AllocateResources()         {};
+        virtual void    InitHierarchy()             {};
+        virtual void    ParseParameters()           {};
+        virtual void    RegisterSignals()           {};
+        virtual void    InitInternalState()         {};
+        virtual void    InitSignals()               {};
+        virtual void    FinishInit()                {};
+        virtual void    PrintDebugOutput()          {};
+};
+
+
+class cModuleInitBase : public cSimpleModule, public cInitAPI
 {
     private:
 
@@ -41,41 +132,17 @@ class cModuleInitBase : public cSimpleModule
         int     numInitStages() const;
         void    initialize( int stage );
 
-        // Initialization API
-        virtual void    ParseResourceParameters()   {};
-        virtual void    AllocateResources()         {};
-        virtual void    InitHierarchy()             {};
-        virtual void    ParseParameters()           {};
-        virtual void    RegisterSignals()           {};
-        virtual void    InitInternalState()         {};
-        virtual void    InitSignals()               {};
-        virtual void    FinishInit()                {};
-        virtual bool    GetEnableDebugOutput()      { return false; };
-        virtual void    PrintDebugOutput()          {};
-
         virtual void    ForwardInit( int stage )    {};
 
     public:
 
 };
 
-class cInitBase
+class cInitBase : public cInitAPI
 {
     private:
 
     protected:
-
-        // Initialization API
-        virtual void    ParseResourceParameters()   {};
-        virtual void    AllocateResources()         {};
-        virtual void    InitHierarchy()             {};
-        virtual void    ParseParameters()           {};
-        virtual void    RegisterSignals()           {};
-        virtual void    InitInternalState()         {};
-        virtual void    InitSignals()               {};
-        virtual void    FinishInit()                {};
-        virtual bool    GetEnableDebugOutput()      { return false; };
-        virtual void    PrintDebugOutput()          {};
 
         virtual void    ForwardInit( int stage )    {};
 
