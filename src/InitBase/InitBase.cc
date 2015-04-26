@@ -57,6 +57,13 @@ cModuleInitBase::initialize( int stage )
 }
 
 // ------------------------------------------------------
+// Constructor (cInitBase)
+// ------------------------------------------------------
+cInitBase::cInitBase()
+{
+    this->pParentModule = NULL;
+}
+// ------------------------------------------------------
 // Initialize (cInitBase)
 // ------------------------------------------------------
 int
@@ -83,4 +90,10 @@ cInitBase::initialize( int stage )
     }
 
     ForwardInit( stage );
+}
+
+void
+cInitBase::SetParentModule( cModule *pModule )
+{
+    this->pParentModule = pModule;
 }

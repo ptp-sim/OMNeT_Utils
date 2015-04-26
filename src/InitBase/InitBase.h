@@ -32,6 +32,7 @@ InitStage_t;
 // ======================================================
 
 /*
+ TODO: Remove
 
 // Init API
 void    ParseResourceParameters();
@@ -144,13 +145,20 @@ class cInitBase : public cInitAPI
 
     protected:
 
+        // Resources
+        cModule         *pParentModule;
+
         virtual void    ForwardInit( int stage )    {};
 
     public:
 
+        cInitBase();
+
         // OMNeT init API
         int     numInitStages() const;
         void    initialize( int stage );
+
+        void    SetParentModule( cModule *pModule );
 };
 
 #endif
