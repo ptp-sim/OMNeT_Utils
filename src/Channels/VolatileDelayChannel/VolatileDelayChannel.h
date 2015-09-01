@@ -31,15 +31,29 @@
 
 #include <omnetpp.h>
 
-class cVolatileDelayChannel : public cDelayChannel
+class cVolatileDelayChannel : public cChannel
 {
+    protected:
+
+        // Resources
+        cPar *pDelayPar;
+
     public:
 
-        explicit cVolatileDelayChannel(const char *name=NULL) : cDelayChannel(name) {}
+        // Constructors/Destructor
+        explicit cVolatileDelayChannel(const char *name=NULL) : cChannel(name) {}
         virtual ~cVolatileDelayChannel() {}
 
+        // Channel API
         virtual void initialize();
         virtual void processMessage(cMessage *msg, simtime_t t, result_t& result);
+
+        virtual bool        isTransmissionChannel() const;
+        virtual double      getNominalDatarate() const;
+        virtual simtime_t   calculateDuration(cMessage *msg) const;
+        virtual simtime_t   getTransmissionFinishTime() const;
+        virtual bool        isBusy() const;
+        virtual void        forceTransmissionFinishTime(simtime_t t);
 };
 
 #endif

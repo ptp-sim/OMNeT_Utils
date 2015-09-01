@@ -28,8 +28,10 @@
 
 package utils.Channels.VolatileDelayChannel;
 
-channel VolatileDelayChannel extends ned.DelayChannel
+channel VolatileDelayChannel
 {
     parameters:
         @class(cVolatileDelayChannel);
+
+        volatile double delay@unit(s) = default(0ns);
 }

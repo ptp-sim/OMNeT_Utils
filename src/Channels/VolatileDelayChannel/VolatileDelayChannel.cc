@@ -28,19 +28,56 @@
 
 #include "VolatileDelayChannel.h"
 
-//Register_Class(cVolatileDelayChannel);
 Define_Channel(cVolatileDelayChannel);
 
 void
 cVolatileDelayChannel::initialize()
 {
-    cDelayChannel::initialize();
+    cChannel::initialize();
+
+    pDelayPar = &par( "delay" );
+
+    EV << "Delay: " << pDelayPar->detailedInfo() << endl;
+    EV << "Delay.isVolatile(): " << pDelayPar->isVolatile() << endl;
 }
 
 void
 cVolatileDelayChannel::processMessage(cMessage *msg, simtime_t t, result_t& result)
 {
-//    rereadPars();
+    result.delay = pDelayPar->doubleValue();
+}
 
-    cDelayChannel::processMessage(msg, t, result);
+bool
+cVolatileDelayChannel::isTransmissionChannel() const
+{
+    return false;
+}
+
+double
+cVolatileDelayChannel::getNominalDatarate() const
+{
+    return 0.0;
+}
+
+simtime_t
+cVolatileDelayChannel::calculateDuration(cMessage *msg) const
+{
+    return SIMTIME_ZERO;
+}
+
+simtime_t
+cVolatileDelayChannel::getTransmissionFinishTime() const
+{
+    return SIMTIME_ZERO;
+}
+
+bool
+cVolatileDelayChannel::isBusy() const
+{
+    return false;
+}
+
+void
+cVolatileDelayChannel::forceTransmissionFinishTime(simtime_t t)
+{
 }
