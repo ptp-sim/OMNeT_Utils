@@ -36,9 +36,6 @@ cVolatileDelayChannel::initialize()
     cChannel::initialize();
 
     pDelayPar = &par( "delay" );
-
-    EV << "Delay: " << pDelayPar->detailedInfo() << endl;
-    EV << "Delay.isVolatile(): " << pDelayPar->isVolatile() << endl;
 }
 
 void
