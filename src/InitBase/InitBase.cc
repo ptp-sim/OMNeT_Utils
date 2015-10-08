@@ -80,7 +80,19 @@ cModuleInitBase::initialize( int stage )
                                             break;
     }
 
-    ForwardInit( stage );
+    switch( (InitStage_t) stage )
+    {
+            case PARSE_RESOURCE_PARAMETERS: // Do not forward initial stages
+            case ALLOCATE_RESOURCES:
+            case INIT_HIERARCHY:
+                                            break;
+
+            case PARSE_PARAMETERS:          ForwardInit( PARSE_RESOURCE_PARAMETERS  );
+                                            ForwardInit( ALLOCATE_RESOURCES         );
+                                            ForwardInit( INIT_HIERARCHY             );
+                                            // Fall-through
+            default:                        ForwardInit( stage );
+    }
 }
 
 // ------------------------------------------------------
@@ -116,7 +128,19 @@ cInitBase::initialize( int stage )
                                             break;
     }
 
-    ForwardInit( stage );
+    switch( (InitStage_t) stage )
+    {
+            case PARSE_RESOURCE_PARAMETERS: // Do not forward initial stages
+            case ALLOCATE_RESOURCES:
+            case INIT_HIERARCHY:
+                                            break;
+
+            case PARSE_PARAMETERS:          ForwardInit( PARSE_RESOURCE_PARAMETERS  );
+                                            ForwardInit( ALLOCATE_RESOURCES         );
+                                            ForwardInit( INIT_HIERARCHY             );
+                                            // Fall-through
+            default:                        ForwardInit( stage );
+    }
 }
 
 void
