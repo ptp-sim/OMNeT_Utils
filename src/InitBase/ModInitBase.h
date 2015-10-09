@@ -34,6 +34,7 @@
 // ======================================================
 
 #include "IInitBase.h"
+#include "CallableModule.h"
 
 // ======================================================
 // Types
@@ -43,7 +44,7 @@
 // Declarations
 // ======================================================
 
-class cModInitBase : public cSimpleModule, public IInitBase
+class cModInitBase : public cCallableModule, public IInitBase
 {
     private:
 
