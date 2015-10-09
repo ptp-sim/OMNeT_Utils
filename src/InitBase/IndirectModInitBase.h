@@ -43,7 +43,7 @@
 // Declarations
 // ======================================================
 
-class cIndirectModInitBase : public IInitAPI
+class cIndirectModInitBase : public IInitBase
 {
     private:
 

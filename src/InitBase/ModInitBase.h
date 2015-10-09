@@ -43,7 +43,7 @@
 // Declarations
 // ======================================================
 
-class cModInitBase : public cSimpleModule, public IInitAPI
+class cModInitBase : public cSimpleModule, public IInitBase
 {
     private:
 

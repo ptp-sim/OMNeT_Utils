@@ -58,7 +58,7 @@ InitStage_t;
 // Declarations
 // ======================================================
 
-class IInitAPI
+class IInitBase
 {
     protected:
 

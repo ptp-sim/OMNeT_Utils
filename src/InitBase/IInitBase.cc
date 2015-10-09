@@ -56,13 +56,13 @@
 // Initialize
 // ------------------------------------------------------
 int
-IInitAPI::numInitStages() const
+IInitBase::numInitStages() const
 {
     return NUM_INIT_STAGES;
 }
 
 void
-IInitAPI::initialize( int stage )
+IInitBase::initialize( int stage )
 {
     switch( stage )
     {

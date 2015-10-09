@@ -75,13 +75,13 @@ cNonModInitBase::~cNonModInitBase()
 int
 cNonModInitBase::numInitStages() const
 {
-    return IInitAPI::numInitStages();
+    return IInitBase::numInitStages();
 }
 
 void
 cNonModInitBase::initialize( int stage )
 {
-    IInitAPI::initialize( stage );
+    IInitBase::initialize( stage );
 }
 
 // ------------------------------------------------------

@@ -58,11 +58,11 @@
 int
 cModInitBase::numInitStages() const
 {
-    return IInitAPI::numInitStages();
+    return IInitBase::numInitStages();
 }
 
 void
 cModInitBase::initialize( int stage )
 {
-    IInitAPI::initialize( stage );
+    IInitBase::initialize( stage );
 }
