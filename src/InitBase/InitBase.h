@@ -58,7 +58,7 @@ InitStage_t;
 // Declarations
 // ======================================================
 
-class cInitAPI
+class IInitAPI
 {
     protected:
 
@@ -72,10 +72,16 @@ class cInitAPI
         virtual void    InitSignals()               {};
         virtual void    FinishInit()                {};
         virtual void    PrintDebugOutput()          {};
+
+        virtual void    ForwardInit( int stage )    {};
+
+        // OMNeT init API
+        int     numInitStages() const;
+        void    initialize( int stage );
 };
 
 
-class cModuleInitBase : public cSimpleModule, public cInitAPI
+class cModuleInitBase : public cSimpleModule, public IInitAPI
 {
     private:
 
@@ -91,7 +97,7 @@ class cModuleInitBase : public cSimpleModule, public cInitAPI
 
 };
 
-class cInitBase : public cInitAPI
+class cInitBase : public IInitAPI
 {
     private:
 

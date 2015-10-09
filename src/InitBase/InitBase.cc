@@ -54,17 +54,14 @@
 // Definitions
 // ======================================================
 
-// ------------------------------------------------------
-// Initialize (cModuleBase)
-// ------------------------------------------------------
 int
-cModuleInitBase::numInitStages() const
+IInitAPI::numInitStages() const
 {
     return NUM_INIT_STAGES;
 }
 
 void
-cModuleInitBase::initialize( int stage )
+IInitAPI::initialize( int stage )
 {
     switch( stage )
     {
@@ -93,6 +90,21 @@ cModuleInitBase::initialize( int stage )
                                             // Fall-through
             default:                        ForwardInit( stage );
     }
+}
+
+// ------------------------------------------------------
+// Initialize (cModuleBase)
+// ------------------------------------------------------
+int
+cModuleInitBase::numInitStages() const
+{
+    return IInitAPI::numInitStages();
+}
+
+void
+cModuleInitBase::initialize( int stage )
+{
+    IInitAPI::initialize( stage );
 }
 
 // ------------------------------------------------------
@@ -118,39 +130,13 @@ cInitBase::~cInitBase()
 int
 cInitBase::numInitStages() const
 {
-    return NUM_INIT_STAGES;
+    return IInitAPI::numInitStages();
 }
 
 void
 cInitBase::initialize( int stage )
 {
-    switch( stage )
-    {
-        case PARSE_RESOURCE_PARAMETERS:     ParseResourceParameters();  break;
-        case ALLOCATE_RESOURCES:            AllocateResources();        break;
-        case INIT_HIERARCHY:                InitHierarchy();            break;
-        case PARSE_PARAMETERS:              ParseParameters();          break;
-        case REGISTER_SIGNALS:              RegisterSignals();          break;
-        case INIT_INTERNAL_STATE:           InitInternalState();        break;
-        case INIT_SIGNALS:                  InitSignals();              break;
-        case FINISH_INIT:                   FinishInit();               break;
-        case DEBUG_OUTPUT:                  PrintDebugOutput();
-                                            break;
-    }
-
-    switch( (InitStage_t) stage )
-    {
-            case PARSE_RESOURCE_PARAMETERS: // Do not forward initial stages
-            case ALLOCATE_RESOURCES:
-            case INIT_HIERARCHY:
-                                            break;
-
-            case PARSE_PARAMETERS:          ForwardInit( PARSE_RESOURCE_PARAMETERS  );
-                                            ForwardInit( ALLOCATE_RESOURCES         );
-                                            ForwardInit( INIT_HIERARCHY             );
-                                            // Fall-through
-            default:                        ForwardInit( stage );
-    }
+    IInitAPI::initialize( stage );
 }
 
 void
