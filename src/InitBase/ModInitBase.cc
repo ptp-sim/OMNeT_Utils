@@ -26,104 +26,43 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef INIT_BASE_H
-#define INIT_BASE_H
-
 // ======================================================
 // Includes
 // ======================================================
 
-#include <omnetpp.h>
+#include "ModInitBase.h"
 
 // ======================================================
 // Types
 // ======================================================
 
-typedef enum
-{
-    PARSE_RESOURCE_PARAMETERS  = 0,
-    ALLOCATE_RESOURCES,
-    INIT_HIERARCHY,
-    PARSE_PARAMETERS,
-    REGISTER_SIGNALS,
-    INIT_INTERNAL_STATE,
-    INIT_SIGNALS,
-    FINISH_INIT,
-    DEBUG_OUTPUT,
-    NUM_INIT_STAGES
-}
-InitStage_t;
+// ======================================================
+// Constants
+// ======================================================
+
+// ======================================================
+// Variables
+// ======================================================
 
 // ======================================================
 // Declarations
 // ======================================================
 
-class IInitAPI
+// ======================================================
+// Definitions
+// ======================================================
+
+// ------------------------------------------------------
+// Initialize
+// ------------------------------------------------------
+int
+cModInitBase::numInitStages() const
 {
-    protected:
+    return IInitAPI::numInitStages();
+}
 
-        // Initialization API
-        virtual void    ParseResourceParameters()   {};
-        virtual void    AllocateResources()         {};
-        virtual void    InitHierarchy()             {};
-        virtual void    ParseParameters()           {};
-        virtual void    RegisterSignals()           {};
-        virtual void    InitInternalState()         {};
-        virtual void    InitSignals()               {};
-        virtual void    FinishInit()                {};
-        virtual void    PrintDebugOutput()          {};
-
-        virtual void    ForwardInit( int stage )    {};
-
-        // OMNeT init API
-        int     numInitStages() const;
-        void    initialize( int stage );
-};
-
-
-class cModuleInitBase : public cSimpleModule, public IInitAPI
+void
+cModInitBase::initialize( int stage )
 {
-    private:
-
-    protected:
-
-        // OMNeT init API
-        int     numInitStages() const;
-        void    initialize( int stage );
-
-        virtual void    ForwardInit( int stage )    {};
-
-    public:
-
-};
-
-class cInitBase : public IInitAPI
-{
-    private:
-
-    protected:
-
-        // Resources
-        cModule         *pParentModule;
-
-        virtual void    ForwardInit( int stage )    {};
-
-    public:
-
-        // Constructors/Destructor
-        cInitBase();
-        cInitBase( const cInitBase& other );
-        ~cInitBase();
-
-        // OMNeT init API
-        int     numInitStages() const;
-        void    initialize( int stage );
-
-        // Module API
-        void    SetParentModule( cModule *pModule );
-
-        // Operators
-        cInitBase&  operator= (const cInitBase& other);
-};
-
-#endif
+    IInitAPI::initialize( stage );
+}

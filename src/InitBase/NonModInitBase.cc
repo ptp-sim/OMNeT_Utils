@@ -30,9 +30,7 @@
 // Includes
 // ======================================================
 
-#include "InitBase.h"
-
-#include <omnetpp.h>
+#include "NonModInitBase.h"
 
 // ======================================================
 // Types
@@ -54,102 +52,52 @@
 // Definitions
 // ======================================================
 
-int
-IInitAPI::numInitStages() const
-{
-    return NUM_INIT_STAGES;
-}
-
-void
-IInitAPI::initialize( int stage )
-{
-    switch( stage )
-    {
-        case PARSE_RESOURCE_PARAMETERS:     ParseResourceParameters();  break;
-        case ALLOCATE_RESOURCES:            AllocateResources();        break;
-        case INIT_HIERARCHY:                InitHierarchy();            break;
-        case PARSE_PARAMETERS:              ParseParameters();          break;
-        case REGISTER_SIGNALS:              RegisterSignals();          break;
-        case INIT_INTERNAL_STATE:           InitInternalState();        break;
-        case INIT_SIGNALS:                  InitSignals();              break;
-        case FINISH_INIT:                   FinishInit();               break;
-        case DEBUG_OUTPUT:                  PrintDebugOutput();
-                                            break;
-    }
-
-    switch( (InitStage_t) stage )
-    {
-            case PARSE_RESOURCE_PARAMETERS: // Do not forward initial stages
-            case ALLOCATE_RESOURCES:
-            case INIT_HIERARCHY:
-                                            break;
-
-            case PARSE_PARAMETERS:          ForwardInit( PARSE_RESOURCE_PARAMETERS  );
-                                            ForwardInit( ALLOCATE_RESOURCES         );
-                                            ForwardInit( INIT_HIERARCHY             );
-                                            // Fall-through
-            default:                        ForwardInit( stage );
-    }
-}
-
 // ------------------------------------------------------
-// Initialize (cModuleBase)
+// Constructors/Destructor
 // ------------------------------------------------------
-int
-cModuleInitBase::numInitStages() const
-{
-    return IInitAPI::numInitStages();
-}
-
-void
-cModuleInitBase::initialize( int stage )
-{
-    IInitAPI::initialize( stage );
-}
-
-// ------------------------------------------------------
-// Constructor (cInitBase)
-// ------------------------------------------------------
-cInitBase::cInitBase()
+cNonModInitBase::cNonModInitBase()
 {
     this->pParentModule = NULL;
 }
 
-cInitBase::cInitBase( const cInitBase& other )
+cNonModInitBase::cNonModInitBase( const cNonModInitBase& other )
 {
     this->pParentModule = other.pParentModule;
 }
 
-cInitBase::~cInitBase()
+cNonModInitBase::~cNonModInitBase()
 {
 }
 
 // ------------------------------------------------------
-// Initialize (cInitBase)
+// Initialize
 // ------------------------------------------------------
 int
-cInitBase::numInitStages() const
+cNonModInitBase::numInitStages() const
 {
     return IInitAPI::numInitStages();
 }
 
 void
-cInitBase::initialize( int stage )
+cNonModInitBase::initialize( int stage )
 {
     IInitAPI::initialize( stage );
 }
 
+// ------------------------------------------------------
+// Module API
+// ------------------------------------------------------
 void
-cInitBase::SetParentModule( cModule *pModule )
+cNonModInitBase::SetParentModule( cModule *pModule )
 {
     this->pParentModule = pModule;
 }
 
 // ------------------------------------------------------
-// Operators (cInitBase)
+// Operators
 // ------------------------------------------------------
-cInitBase&
-cInitBase::operator= (const cInitBase& other)
+cNonModInitBase&
+cNonModInitBase::operator= (const cNonModInitBase& other)
 {
     this->pParentModule = other.pParentModule;
 
