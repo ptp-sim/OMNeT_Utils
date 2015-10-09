@@ -30,7 +30,7 @@
 // Includes
 // ======================================================
 
-#include "ModInitBase.h"
+#include "ModuleInitBase.h"
 
 // ======================================================
 // Types
@@ -56,13 +56,13 @@
 // Initialize
 // ------------------------------------------------------
 int
-cModInitBase::numInitStages() const
+cModuleInitBase::numInitStages() const
 {
     return IInitBase::numInitStages();
 }
 
 void
-cModInitBase::initialize( int stage )
+cModuleInitBase::initialize( int stage )
 {
     IInitBase::initialize( stage );
 }

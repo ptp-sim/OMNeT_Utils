@@ -26,81 +26,37 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef INDIRECT_MODULE_INIT_BASE_H
+#define INDIRECT_MODULE_INIT_BASE_H
+
 // ======================================================
 // Includes
 // ======================================================
 
-#include "NonModInitBase.h"
+#include "IInitBase.h"
 
 // ======================================================
 // Types
 // ======================================================
 
 // ======================================================
-// Constants
-// ======================================================
-
-// ======================================================
-// Variables
-// ======================================================
-
-// ======================================================
 // Declarations
 // ======================================================
 
-// ======================================================
-// Definitions
-// ======================================================
-
-// ------------------------------------------------------
-// Constructors/Destructor
-// ------------------------------------------------------
-cNonModInitBase::cNonModInitBase()
+class cIndirectModuleInitBase : public IInitBase
 {
-    this->pParentModule = NULL;
-}
+    private:
 
-cNonModInitBase::cNonModInitBase( const cNonModInitBase& other )
-{
-    this->pParentModule = other.pParentModule;
-}
+    protected:
 
-cNonModInitBase::~cNonModInitBase()
-{
-}
+        // OMNeT init API
+        int     numInitStages() const;
+        void    initialize( int stage );
 
-// ------------------------------------------------------
-// Initialize
-// ------------------------------------------------------
-int
-cNonModInitBase::numInitStages() const
-{
-    return IInitBase::numInitStages();
-}
+        virtual void    ForwardInit( int stage )    {};
 
-void
-cNonModInitBase::initialize( int stage )
-{
-    IInitBase::initialize( stage );
-}
+    public:
 
-// ------------------------------------------------------
-// Module API
-// ------------------------------------------------------
-void
-cNonModInitBase::SetParentModule( cModule *pModule )
-{
-    this->pParentModule = pModule;
-}
+};
 
-// ------------------------------------------------------
-// Operators
-// ------------------------------------------------------
-cNonModInitBase&
-cNonModInitBase::operator= (const cNonModInitBase& other)
-{
-    this->pParentModule = other.pParentModule;
-
-    // By convention, always return *this
-    return *this;
-}
+#endif

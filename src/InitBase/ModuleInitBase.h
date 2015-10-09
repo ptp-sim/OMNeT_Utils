@@ -26,43 +26,36 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef MODULE_INIT_BASE_H
+#define MODULE_INIT_BASE_H
+
 // ======================================================
 // Includes
 // ======================================================
 
-#include "IndirectModInitBase.h"
+#include "IInitBase.h"
+#include "CallableModule.h"
 
 // ======================================================
 // Types
 // ======================================================
 
 // ======================================================
-// Constants
-// ======================================================
-
-// ======================================================
-// Variables
-// ======================================================
-
-// ======================================================
 // Declarations
 // ======================================================
 
-// ======================================================
-// Definitions
-// ======================================================
-
-// ------------------------------------------------------
-// Initialize
-// ------------------------------------------------------
-int
-cIndirectModInitBase::numInitStages() const
+class cModuleInitBase : public cCallableModule, public IInitBase
 {
-    return IInitBase::numInitStages();
-}
+    private:
 
-void
-cIndirectModInitBase::initialize( int stage )
-{
-    IInitBase::initialize( stage );
-}
+    protected:
+
+        // OMNeT init API
+        int     numInitStages() const;
+        void    initialize( int stage );
+
+    public:
+
+};
+
+#endif

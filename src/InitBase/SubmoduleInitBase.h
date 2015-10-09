@@ -26,8 +26,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef INDIRECT_MOD_INIT_BASE_H
-#define INDIRECT_MOD_INIT_BASE_H
+#ifndef SUBMODULE_INIT_BASE_H
+#define SUBMODULE_INIT_BASE_H
 
 // ======================================================
 // Includes
@@ -43,20 +43,31 @@
 // Declarations
 // ======================================================
 
-class cIndirectModInitBase : public IInitBase
+class cSubmoduleInitBase : public IInitBase
 {
     private:
 
     protected:
 
+        // Resources
+        cModule         *pParentModule;
+
+    public:
+
+        // Constructors/Destructor
+        cSubmoduleInitBase();
+        cSubmoduleInitBase( const cSubmoduleInitBase& other );
+        ~cSubmoduleInitBase();
+
         // OMNeT init API
         int     numInitStages() const;
         void    initialize( int stage );
 
-        virtual void    ForwardInit( int stage )    {};
+        // Module API
+        void    SetParentModule( cModule *pModule );
 
-    public:
-
+        // Operators
+        cSubmoduleInitBase&  operator= (const cSubmoduleInitBase& other);
 };
 
 #endif

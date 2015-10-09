@@ -26,48 +26,81 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef NON_MOD_INIT_BASE_H
-#define NON_MOD_INIT_BASE_H
-
 // ======================================================
 // Includes
 // ======================================================
 
-#include "IInitBase.h"
+#include "SubmoduleInitBase.h"
 
 // ======================================================
 // Types
 // ======================================================
 
 // ======================================================
+// Constants
+// ======================================================
+
+// ======================================================
+// Variables
+// ======================================================
+
+// ======================================================
 // Declarations
 // ======================================================
 
-class cNonModInitBase : public IInitBase
+// ======================================================
+// Definitions
+// ======================================================
+
+// ------------------------------------------------------
+// Constructors/Destructor
+// ------------------------------------------------------
+cSubmoduleInitBase::cSubmoduleInitBase()
 {
-    private:
+    this->pParentModule = NULL;
+}
 
-    protected:
+cSubmoduleInitBase::cSubmoduleInitBase( const cSubmoduleInitBase& other )
+{
+    this->pParentModule = other.pParentModule;
+}
 
-        // Resources
-        cModule         *pParentModule;
+cSubmoduleInitBase::~cSubmoduleInitBase()
+{
+}
 
-    public:
+// ------------------------------------------------------
+// Initialize
+// ------------------------------------------------------
+int
+cSubmoduleInitBase::numInitStages() const
+{
+    return IInitBase::numInitStages();
+}
 
-        // Constructors/Destructor
-        cNonModInitBase();
-        cNonModInitBase( const cNonModInitBase& other );
-        ~cNonModInitBase();
+void
+cSubmoduleInitBase::initialize( int stage )
+{
+    IInitBase::initialize( stage );
+}
 
-        // OMNeT init API
-        int     numInitStages() const;
-        void    initialize( int stage );
+// ------------------------------------------------------
+// Module API
+// ------------------------------------------------------
+void
+cSubmoduleInitBase::SetParentModule( cModule *pModule )
+{
+    this->pParentModule = pModule;
+}
 
-        // Module API
-        void    SetParentModule( cModule *pModule );
+// ------------------------------------------------------
+// Operators
+// ------------------------------------------------------
+cSubmoduleInitBase&
+cSubmoduleInitBase::operator= (const cSubmoduleInitBase& other)
+{
+    this->pParentModule = other.pParentModule;
 
-        // Operators
-        cNonModInitBase&  operator= (const cNonModInitBase& other);
-};
-
-#endif
+    // By convention, always return *this
+    return *this;
+}
