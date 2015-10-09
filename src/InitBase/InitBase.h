@@ -104,13 +104,20 @@ class cInitBase : public cInitAPI
 
     public:
 
+        // Constructors/Destructor
         cInitBase();
+        cInitBase( const cInitBase& other );
+        ~cInitBase();
 
         // OMNeT init API
         int     numInitStages() const;
         void    initialize( int stage );
 
+        // Module API
         void    SetParentModule( cModule *pModule );
+
+        // Operators
+        cInitBase&  operator= (const cInitBase& other);
 };
 
 #endif

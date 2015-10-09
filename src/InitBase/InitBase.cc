@@ -102,6 +102,16 @@ cInitBase::cInitBase()
 {
     this->pParentModule = NULL;
 }
+
+cInitBase::cInitBase( const cInitBase& other )
+{
+    this->pParentModule = other.pParentModule;
+}
+
+cInitBase::~cInitBase()
+{
+}
+
 // ------------------------------------------------------
 // Initialize (cInitBase)
 // ------------------------------------------------------
@@ -147,4 +157,16 @@ void
 cInitBase::SetParentModule( cModule *pModule )
 {
     this->pParentModule = pModule;
+}
+
+// ------------------------------------------------------
+// Operators (cInitBase)
+// ------------------------------------------------------
+cInitBase&
+cInitBase::operator= (const cInitBase& other)
+{
+    this->pParentModule = other.pParentModule;
+
+    // By convention, always return *this
+    return *this;
 }
