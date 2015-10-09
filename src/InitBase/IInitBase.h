@@ -26,8 +26,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef INIT_BASE_H
-#define INIT_BASE_H
+#ifndef IINIT_BASE_H
+#define IINIT_BASE_H
 
 // ======================================================
 // Includes
