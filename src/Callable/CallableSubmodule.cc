@@ -84,7 +84,14 @@ cCallableSubmodule::SetCallableParentModule( ICallableBase *pCallableParent )
 void
 cCallableSubmodule::EnterMethodSilent()
 {
-    pCallableParent->EnterMethodSilent();
+    if( pCallableParent != NULL )
+    {
+        pCallableParent->EnterMethodSilent();
+    }
+    else
+    {
+        throw cRuntimeError( "This submodule has no configured callable parent module." );
+    }
 }
 
 // ------------------------------------------------------
