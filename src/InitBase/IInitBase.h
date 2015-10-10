@@ -46,7 +46,7 @@
 class IInitBase
 {
     private:
-        typedef enum
+        enum class InitStage
         {
             PARSE_RESOURCE_PARAMETERS  = 0,
             ALLOCATE_RESOURCES,
@@ -58,8 +58,7 @@ class IInitBase
             FINISH_INIT,
             DEBUG_OUTPUT,
             NUM_INIT_STAGES
-        }
-        InitStage_t;
+        };
 
     protected:
 

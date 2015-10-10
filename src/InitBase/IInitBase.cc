@@ -58,37 +58,42 @@
 int
 IInitBase::numInitStages() const
 {
-    return NUM_INIT_STAGES;
+    return static_cast<int>(InitStage::NUM_INIT_STAGES);
 }
 
 void
 IInitBase::initialize( int stage )
 {
-    switch( stage )
+    InitStage initStage = static_cast<InitStage>(stage);
+
+    switch( initStage )
     {
-        case PARSE_RESOURCE_PARAMETERS:     ParseResourceParameters();  break;
-        case ALLOCATE_RESOURCES:            AllocateResources();        break;
-        case INIT_HIERARCHY:                InitHierarchy();            break;
-        case PARSE_PARAMETERS:              ParseParameters();          break;
-        case REGISTER_SIGNALS:              RegisterSignals();          break;
-        case INIT_INTERNAL_STATE:           InitInternalState();        break;
-        case INIT_SIGNALS:                  InitSignals();              break;
-        case FINISH_INIT:                   FinishInit();               break;
-        case DEBUG_OUTPUT:                  PrintDebugOutput();
-                                            break;
+        case InitStage::PARSE_RESOURCE_PARAMETERS:      ParseResourceParameters();  break;
+        case InitStage::ALLOCATE_RESOURCES:             AllocateResources();        break;
+        case InitStage::INIT_HIERARCHY:                 InitHierarchy();            break;
+        case InitStage::PARSE_PARAMETERS:               ParseParameters();          break;
+        case InitStage::REGISTER_SIGNALS:               RegisterSignals();          break;
+        case InitStage::INIT_INTERNAL_STATE:            InitInternalState();        break;
+        case InitStage::INIT_SIGNALS:                   InitSignals();              break;
+        case InitStage::FINISH_INIT:                    FinishInit();               break;
+        case InitStage::DEBUG_OUTPUT:                   PrintDebugOutput();
+                                                        break;
+
+        default:                                        throw cRuntimeError( "Unexpected init stage" );
+                                                        break;
     }
 
-    switch( (InitStage_t) stage )
+    switch( initStage )
     {
-            case PARSE_RESOURCE_PARAMETERS: // Do not forward initial stages
-            case ALLOCATE_RESOURCES:
-            case INIT_HIERARCHY:
-                                            break;
+            case InitStage::PARSE_RESOURCE_PARAMETERS:  // Do not forward initial stages
+            case InitStage::ALLOCATE_RESOURCES:
+            case InitStage::INIT_HIERARCHY:
+                                                        break;
 
-            case PARSE_PARAMETERS:          ForwardInit( PARSE_RESOURCE_PARAMETERS  );
-                                            ForwardInit( ALLOCATE_RESOURCES         );
-                                            ForwardInit( INIT_HIERARCHY             );
-                                            // Fall-through
-            default:                        ForwardInit( stage );
+            case InitStage::PARSE_PARAMETERS:           ForwardInit( static_cast<int>(InitStage::PARSE_RESOURCE_PARAMETERS) );
+                                                        ForwardInit( static_cast<int>(InitStage::ALLOCATE_RESOURCES       ) );
+                                                        ForwardInit( static_cast<int>(InitStage::INIT_HIERARCHY           ) );
+                                                                // Fall-through
+            default:                                    ForwardInit( stage );
     }
 }
