@@ -2,3 +2,5 @@ out
 *.so
 *.dll
 *~
+Makefile
+simulations/run
