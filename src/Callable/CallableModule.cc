@@ -56,7 +56,19 @@
 // Callable API
 // ------------------------------------------------------
 void
-cCallableModule::EnterMethodSilent()
+cCallableModule::EnterModuleSilent()
 {
-    Enter_Method_Silent();
+    cMethodCallContextSwitcher *pCS = new cMethodCallContextSwitcher(this);
+    pCS->methodCallSilent();
+
+    ContextStack.push(pCS);
+}
+
+void
+cCallableModule::LeaveModule()
+{
+    cMethodCallContextSwitcher *pCS = ContextStack.top();
+    ContextStack.pop();
+
+    delete pCS;
 }

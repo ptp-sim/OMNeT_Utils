@@ -47,6 +47,9 @@ class cCallableSubmodule : public virtual ICallableBase
 {
     private:
 
+        // Internal functions
+        void    VerifyConfigured();
+
     protected:
 
         // Resources
@@ -63,7 +66,8 @@ class cCallableSubmodule : public virtual ICallableBase
         void    SetCallableParentModule( ICallableBase *pCallableParent );
 
         // Callable API
-        void    EnterMethodSilent();
+        void    EnterModuleSilent();
+        void    LeaveModule();
 
         // Operators
         cCallableSubmodule&  operator= (const cCallableSubmodule& other);

@@ -35,6 +35,7 @@
 
 #include "ICallableBase.h"
 #include <omnetpp.h>
+#include <stack>
 
 // ======================================================
 // Types
@@ -48,12 +49,16 @@ class cCallableModule : public cSimpleModule, public virtual ICallableBase
 {
     private:
 
+        // Resources
+        std::stack<cMethodCallContextSwitcher *>    ContextStack;
+
     protected:
 
     public:
 
         // Callable API
-        void    EnterMethodSilent();
+        void    EnterModuleSilent();
+        void    LeaveModule();
 };
 
 #endif

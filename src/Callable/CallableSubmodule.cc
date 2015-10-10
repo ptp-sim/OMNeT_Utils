@@ -53,6 +53,18 @@
 // ======================================================
 
 // ------------------------------------------------------
+// Internal functions
+// ------------------------------------------------------
+void
+cCallableSubmodule::VerifyConfigured()
+{
+    if( pCallableParent == nullptr )
+    {
+        throw cRuntimeError( "This submodule has no configured callable parent module." );
+    }
+}
+
+// ------------------------------------------------------
 // Constructors/Destructor
 // ------------------------------------------------------
 cCallableSubmodule::cCallableSubmodule()
@@ -82,16 +94,19 @@ cCallableSubmodule::SetCallableParentModule( ICallableBase *pCallableParent )
 // Callable API
 // ------------------------------------------------------
 void
-cCallableSubmodule::EnterMethodSilent()
+cCallableSubmodule::EnterModuleSilent()
 {
-    if( pCallableParent != nullptr )
-    {
-        pCallableParent->EnterMethodSilent();
-    }
-    else
-    {
-        throw cRuntimeError( "This submodule has no configured callable parent module." );
-    }
+    VerifyConfigured();
+
+    pCallableParent->EnterModuleSilent();
+}
+
+void
+cCallableSubmodule::LeaveModule()
+{
+    VerifyConfigured();
+
+    pCallableParent->LeaveModule();
 }
 
 // ------------------------------------------------------

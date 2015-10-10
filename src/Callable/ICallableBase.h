@@ -46,7 +46,8 @@
 class ICallableBase
 {
     public:
-        virtual void    EnterMethodSilent() = 0;
+        virtual void    EnterModuleSilent() = 0;
+        virtual void    LeaveModule() = 0;
 };
 
 #endif
