@@ -39,27 +39,28 @@
 // Types
 // ======================================================
 
-typedef enum
-{
-    PARSE_RESOURCE_PARAMETERS  = 0,
-    ALLOCATE_RESOURCES,
-    INIT_HIERARCHY,
-    PARSE_PARAMETERS,
-    REGISTER_SIGNALS,
-    INIT_INTERNAL_STATE,
-    INIT_SIGNALS,
-    FINISH_INIT,
-    DEBUG_OUTPUT,
-    NUM_INIT_STAGES
-}
-InitStage_t;
-
 // ======================================================
 // Declarations
 // ======================================================
 
 class IInitBase
 {
+    private:
+        typedef enum
+        {
+            PARSE_RESOURCE_PARAMETERS  = 0,
+            ALLOCATE_RESOURCES,
+            INIT_HIERARCHY,
+            PARSE_PARAMETERS,
+            REGISTER_SIGNALS,
+            INIT_INTERNAL_STATE,
+            INIT_SIGNALS,
+            FINISH_INIT,
+            DEBUG_OUTPUT,
+            NUM_INIT_STAGES
+        }
+        InitStage_t;
+
     protected:
 
         // Initialization API
