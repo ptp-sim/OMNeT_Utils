@@ -57,7 +57,7 @@
 // ------------------------------------------------------
 cSubmoduleInitBase::cSubmoduleInitBase()
 {
-    this->pParentModule = NULL;
+    this->pParentModule = nullptr;
 }
 
 cSubmoduleInitBase::cSubmoduleInitBase( const cSubmoduleInitBase& other )

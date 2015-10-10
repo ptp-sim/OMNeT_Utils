@@ -41,7 +41,7 @@ class cVolatileDelayChannel : public cChannel
     public:
 
         // Constructors/Destructor
-        explicit cVolatileDelayChannel(const char *name=NULL) : cChannel(name) {}
+        explicit cVolatileDelayChannel(const char *name=nullptr) : cChannel(name) {}
         virtual ~cVolatileDelayChannel() {}
 
         // Channel API

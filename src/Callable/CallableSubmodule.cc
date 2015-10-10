@@ -57,7 +57,7 @@
 // ------------------------------------------------------
 cCallableSubmodule::cCallableSubmodule()
 {
-    this->pCallableParent = NULL;
+    this->pCallableParent = nullptr;
 }
 
 cCallableSubmodule::cCallableSubmodule( const cCallableSubmodule& other )
@@ -84,7 +84,7 @@ cCallableSubmodule::SetCallableParentModule( ICallableBase *pCallableParent )
 void
 cCallableSubmodule::EnterMethodSilent()
 {
-    if( pCallableParent != NULL )
+    if( pCallableParent != nullptr )
     {
         pCallableParent->EnterMethodSilent();
     }
