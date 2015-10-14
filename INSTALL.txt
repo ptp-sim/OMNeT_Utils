@@ -10,26 +10,9 @@ Step 1: Requirements
     a shell with the OMNeT++ binaries in its path, and from the
     top project folder
 
-Step 2: Generate makefiles
+Step 2: Build project in OMNeT++:
 
-    Run the following shell script:
-    Make_Makefiles.sh
-
-Step 3a: Build project on command line
-
-    Command for debug build:
-
-    make
-
-    Command for release build:
-
-    make MODE=release
-
-Step 3b: Build project in OMNeT++:
-
-    Instead of using the command line, the project can also
-    be built from the OMNeT++ GUI: Select the build configuration
-    (release or debug) with right-click on the project ->
-    Build Configurations -> Set Active.
+    Select the build configuration (release or debug) with
+    right-click on the project -> Configurations -> Set Active.
 
     Right click on project -> Build Project
