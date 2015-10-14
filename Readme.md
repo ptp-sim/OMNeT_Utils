@@ -173,7 +173,7 @@ Pseudo code example:
         return Parse<MyType>( MyTypeParseArray, ArrayLen(MyTypeParseArray), Str );
     }
 
-    // Using the parser in your initialize routines (`ParseParameters()`, if you use _InitBase_):
+    // Using the parser in your initialize routines (ParseParameters(), if you use InitBase):
     MyType  t = MyParser::ParseMyType( par( "MyTypeParameter" ).stringValue() );
 
 Building
