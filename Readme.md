@@ -32,7 +32,7 @@ Consider the following pseudo-code:
     clase A
     {
         public: void foo() {};   // <-- Can't call Enter_Method_Silent() here,
-                                 //     as A doe not inherit from cModule
+                                 //     as A does not inherit from cModule
     }
 
     class B: public cSimpleModule
