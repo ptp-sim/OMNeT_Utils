@@ -50,7 +50,7 @@ Consider the following pseudo-code:
 
     C::C()
     {
-        b = heck_and_cast<B *>(getModuleByPath("^.b"));
+        b = check_and_cast<B *>(getModuleByPath("^.b"));
 
         b->a.foo();
     }
