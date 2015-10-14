@@ -140,6 +140,41 @@ Consider as an example the following pseudo code:
 ### ParameterParser
 
 This subproject helps to parse parameter strings into enumerations.
+This is done by providing a simple helper array for string/enumeration assignment and a stupid loop with elements comparison.
+There is lots of room for improvement in the implementation of this subproject, but for now it works and does what it should :)
+
+Pseudo code example:
+
+    // The enumeration you would like to use in your code
+    enum MyType
+    {
+        MY_TYPE_OPTION_A,
+        MY_TYPE_OPTION_B,
+    };
+
+    // A helper array to help assign strings -> enumerations
+    ParseType<MyType>   MyTypeParseArray[] =
+    {
+        { MY_TYPE_OPTION_A, "MY_TYPE_OPTION_A" },
+        { MY_TYPE_OPTION_B, "MY_TYPE_OPTION_B" },
+    };
+
+    // Your custom paramter parsing class
+    class MyParser
+    {
+        public:
+            static MyType ParseMyType(const char *Str);
+    };
+
+    // Function to parse your enumerations
+    MyType
+    MyParser::ParseMyType(const char *Str)
+    {
+        return Parse<MyType>( MyTypeParseArray, ArrayLen(MyTypeParseArray), Str );
+    }
+
+    // Using the parser in your initialize routines (`ParseParameters()`, if you use _InitBase_):
+    MyType  t = MyParser::ParseMyType( par( "MyTypeParameter" ).stringValue() );
 
 Building
 ---------------------
