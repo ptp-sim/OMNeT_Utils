@@ -67,7 +67,7 @@ the delay parameter is volatile, and thus re-read on every access.
 ### DynamicSignals
 
 OMNeT++ provides the possibility to register signals with dynamic names during runtime.
-Teh _DynamicSignals_ subproject provides helper functions to make this a little bit easier.
+The _DynamicSignals_ subproject provides helper functions to make this a little bit easier.
 
 ### InitBase
 
@@ -84,17 +84,17 @@ The interface class `IInitBase` provides the following functions:
 * __RegisterSignals():__ Register signals.
 * __InitInternalState():__ Initialize a consistent state for this module depending on the configuration.
 * __InitSignals():__ If the semantic of signals makes sense on startup (e.g. the size of a queue could be 0 at startup), the initial signal values may be emitted here. After this stage it is allowed to use the module's signals.
-* __FinishInit():__ If the module needs to schedules event on startup or things like that, this should be done here.
+* __FinishInit():__ If the module needs to schedule event on startup or things like that, this should be done here.
 * __PrintDebugOutput():__ If the configuration tells the module to print initial debug output, this can be implemented here.
 
-* __ForwardInit( int stage ):__ In case that this module has child classes that implement the `IInitBase` interface, `ForwardInit(stage)` has to call their `initialize(stage)` routine with its own `stage` parameter. `IInitBase` takes care that child classes are only initialized after the parent process is ready.
+* __ForwardInit( int stage ):__ In case that this module has child classes that implement the `IInitBase` interface, `ForwardInit()` has to call their `initialize(stage)` routine with its own `stage` parameter. `IInitBase` takes care that child classes are only initialized after the parent process is ready.
 
 The _InitBase_ project provides the following helper classes:
 
 * __ModuleInitBase__: this is for simple modules and directly inherits from `cSimpleModule`.
-* __SubmoduleInitBase__: the purpose of this class is to introduce the _InitBase_ interface to classes that are used as childs from other moduls that support the interface. The parents `ForwardInit()` function is responsible to call the child's `initialize()`.
+* __SubmoduleInitBase__: the purpose of this class is to introduce the `IInitBase` interface to classes that are used as childs from other moduls that support the interface. The parents `ForwardInit()` function is responsible to call the child's `initialize()`. On the other hand, the childs may rely on the parent for cSimpleModule-specific functions, like calilng `par()`.
 
-In case `ModuleInitBase` or `SubmoduleInitBase` are use, the following functions from original OMNeT++ initialization API __should not__ be used otherwise anymore:
+In case `ModuleInitBase` or `SubmoduleInitBase` are use, the following functions from the original OMNeT++ initialization API __should not__ be used otherwise anymore:
 
 * __numInitStages()__
 * __initialize( int stage )__
@@ -110,7 +110,7 @@ Consider as an example the following pseudo code:
     {
     }
 
-    // This is you class
+    // This is your class
     class MyModule: public ExternalModule, public IInitBase
     {
     }
@@ -140,7 +140,7 @@ Consider as an example the following pseudo code:
 ### ParameterParser
 
 This subproject helps to parse parameter strings into enumerations.
-This is done by providing a simple helper array for string/enumeration assignment and a stupid loop with elements comparison.
+This is done by providing a simple helper array for string/enumeration assignment and a stupid loop with element comparison.
 There is lots of room for improvement in the implementation of this subproject, but for now it works and does what it should :)
 
 Pseudo code example:
