@@ -52,7 +52,7 @@ Consider the following pseudo-code:
     {
         b = check_and_cast<B *>(getModuleByPath("^.b"));
 
-        b->a.foo();
+        b->a.foo();   // <-- Directly calling a method from a child class of b
     }
 
 The _Callable_ subproject provides helper functions to enable this scenario.
