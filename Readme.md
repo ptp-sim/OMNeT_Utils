@@ -184,7 +184,7 @@ See INSTALL.txt for details.
 License
 ---------------------
 
-This project is licensed unter the 3-clause BSD license. See the LICENSE.txt file for details.
+This project is licensed under the 3-clause BSD license. See the LICENSE.txt file for details.
 
 Contact
 ---------------------
