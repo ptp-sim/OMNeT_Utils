@@ -26,28 +26,12 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
+package utils.Channels.VolatileDelayChannel;
 
-// ======================================================
-// Includes
-// ======================================================
-
-#include <omnetpp.h>
-
-// ======================================================
-// Types
-// ======================================================
-
-// ======================================================
-// Declarations
-// ======================================================
-
-namespace DynamicSignals
+channel VolatileDelayChannel
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
-}
+    parameters:
+        @class(cVolatileDelayChannel);
 
-#endif
+        volatile double delay@unit(s) = default(0ns);
+}

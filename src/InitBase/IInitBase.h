@@ -26,8 +26,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
+#ifndef IINIT_BASE_H
+#define IINIT_BASE_H
 
 // ======================================================
 // Includes
@@ -43,11 +43,41 @@
 // Declarations
 // ======================================================
 
-namespace DynamicSignals
+class IInitBase
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
-}
+    private:
+        enum class InitStage
+        {
+            PARSE_RESOURCE_PARAMETERS  = 0,
+            ALLOCATE_RESOURCES,
+            INIT_HIERARCHY,
+            PARSE_PARAMETERS,
+            REGISTER_SIGNALS,
+            INIT_INTERNAL_STATE,
+            INIT_SIGNALS,
+            FINISH_INIT,
+            DEBUG_OUTPUT,
+            NUM_INIT_STAGES
+        };
+
+    protected:
+
+        // Initialization API
+        virtual void    ParseResourceParameters()   {};
+        virtual void    AllocateResources()         {};
+        virtual void    InitHierarchy()             {};
+        virtual void    ParseParameters()           {};
+        virtual void    RegisterSignals()           {};
+        virtual void    InitInternalState()         {};
+        virtual void    InitSignals()               {};
+        virtual void    FinishInit()                {};
+        virtual void    PrintDebugOutput()          {};
+
+        virtual void    ForwardInit( int stage )    {};
+
+        // OMNeT init API
+        int     numInitStages() const;
+        void    initialize( int stage );
+};
 
 #endif

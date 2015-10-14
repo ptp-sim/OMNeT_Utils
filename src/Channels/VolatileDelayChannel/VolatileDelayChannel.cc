@@ -26,28 +26,55 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
+#include "VolatileDelayChannel.h"
 
-// ======================================================
-// Includes
-// ======================================================
+Define_Channel(cVolatileDelayChannel);
 
-#include <omnetpp.h>
-
-// ======================================================
-// Types
-// ======================================================
-
-// ======================================================
-// Declarations
-// ======================================================
-
-namespace DynamicSignals
+void
+cVolatileDelayChannel::initialize()
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
+    cChannel::initialize();
+
+    pDelayPar = &par( "delay" );
 }
 
-#endif
+void
+cVolatileDelayChannel::processMessage(cMessage *msg, simtime_t t, result_t& result)
+{
+    result.delay = pDelayPar->doubleValue();
+}
+
+bool
+cVolatileDelayChannel::isTransmissionChannel() const
+{
+    return false;
+}
+
+double
+cVolatileDelayChannel::getNominalDatarate() const
+{
+    return 0.0;
+}
+
+simtime_t
+cVolatileDelayChannel::calculateDuration(cMessage *msg) const
+{
+    return SIMTIME_ZERO;
+}
+
+simtime_t
+cVolatileDelayChannel::getTransmissionFinishTime() const
+{
+    return SIMTIME_ZERO;
+}
+
+bool
+cVolatileDelayChannel::isBusy() const
+{
+    return false;
+}
+
+void
+cVolatileDelayChannel::forceTransmissionFinishTime(simtime_t t)
+{
+}

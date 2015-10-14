@@ -26,14 +26,14 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
+#ifndef CALLABLE_SUBMODULE_H
+#define CALLABLE_SUBMODULE_H
 
 // ======================================================
 // Includes
 // ======================================================
 
-#include <omnetpp.h>
+#include "ICallableBase.h"
 
 // ======================================================
 // Types
@@ -43,11 +43,34 @@
 // Declarations
 // ======================================================
 
-namespace DynamicSignals
+class cCallableSubmodule : public virtual ICallableBase
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
-}
+    private:
+
+        // Internal functions
+        void    VerifyConfigured();
+
+    protected:
+
+        // Resources
+        ICallableBase   *pCallableParent;
+
+    public:
+
+        // Constructors/Destructor
+        cCallableSubmodule();
+        cCallableSubmodule( const cCallableSubmodule& other );
+        ~cCallableSubmodule();
+
+        // Module API
+        void    SetCallableParentModule( ICallableBase *pCallableParent );
+
+        // Callable API
+        void    EnterModuleSilent();
+        void    LeaveModule();
+
+        // Operators
+        cCallableSubmodule&  operator= (const cCallableSubmodule& other);
+};
 
 #endif

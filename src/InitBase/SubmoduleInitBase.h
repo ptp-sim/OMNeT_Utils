@@ -26,14 +26,14 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
+#ifndef SUBMODULE_INIT_BASE_H
+#define SUBMODULE_INIT_BASE_H
 
 // ======================================================
 // Includes
 // ======================================================
 
-#include <omnetpp.h>
+#include "IInitBase.h"
 
 // ======================================================
 // Types
@@ -43,11 +43,31 @@
 // Declarations
 // ======================================================
 
-namespace DynamicSignals
+class cSubmoduleInitBase : public IInitBase
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
-}
+    private:
+
+    protected:
+
+        // Resources
+        cModule         *pParentModule;
+
+    public:
+
+        // Constructors/Destructor
+        cSubmoduleInitBase();
+        cSubmoduleInitBase( const cSubmoduleInitBase& other );
+        ~cSubmoduleInitBase();
+
+        // OMNeT init API
+        int     numInitStages() const;
+        void    initialize( int stage );
+
+        // Module API
+        void    SetParentModule( cModule *pModule );
+
+        // Operators
+        cSubmoduleInitBase&  operator= (const cSubmoduleInitBase& other);
+};
 
 #endif

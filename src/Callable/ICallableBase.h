@@ -26,8 +26,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
+#ifndef ICALLABLE_BASE_H
+#define ICALLABLE_BASE_H
 
 // ======================================================
 // Includes
@@ -43,11 +43,11 @@
 // Declarations
 // ======================================================
 
-namespace DynamicSignals
+class ICallableBase
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
-}
+    public:
+        virtual void    EnterModuleSilent() = 0;
+        virtual void    LeaveModule() = 0;
+};
 
 #endif

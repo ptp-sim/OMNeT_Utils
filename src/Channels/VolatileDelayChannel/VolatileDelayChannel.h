@@ -26,28 +26,34 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
-
-// ======================================================
-// Includes
-// ======================================================
+#ifndef __UTILS_VOLATILE_DELAY_CHANNEL_H_
+#define __UTILS_VOLATILE_DELAY_CHANNEL_H_
 
 #include <omnetpp.h>
 
-// ======================================================
-// Types
-// ======================================================
-
-// ======================================================
-// Declarations
-// ======================================================
-
-namespace DynamicSignals
+class cVolatileDelayChannel : public cChannel
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
-}
+    protected:
+
+        // Resources
+        cPar *pDelayPar;
+
+    public:
+
+        // Constructors/Destructor
+        explicit cVolatileDelayChannel(const char *name=nullptr) : cChannel(name) {}
+        virtual ~cVolatileDelayChannel() {}
+
+        // Channel API
+        virtual void initialize();
+        virtual void processMessage(cMessage *msg, simtime_t t, result_t& result);
+
+        virtual bool        isTransmissionChannel() const;
+        virtual double      getNominalDatarate() const;
+        virtual simtime_t   calculateDuration(cMessage *msg) const;
+        virtual simtime_t   getTransmissionFinishTime() const;
+        virtual bool        isBusy() const;
+        virtual void        forceTransmissionFinishTime(simtime_t t);
+};
 
 #endif

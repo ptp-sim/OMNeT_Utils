@@ -26,14 +26,15 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
+#ifndef MODULE_INIT_BASE_H
+#define MODULE_INIT_BASE_H
 
 // ======================================================
 // Includes
 // ======================================================
 
-#include <omnetpp.h>
+#include "IInitBase.h"
+#include "CallableModule.h"
 
 // ======================================================
 // Types
@@ -43,11 +44,18 @@
 // Declarations
 // ======================================================
 
-namespace DynamicSignals
+class cModuleInitBase : public cCallableModule, public IInitBase
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
-}
+    private:
+
+    protected:
+
+        // OMNeT init API
+        int     numInitStages() const;
+        void    initialize( int stage );
+
+    public:
+
+};
 
 #endif

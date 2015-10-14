@@ -26,14 +26,16 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DYNAMIC_SIGNALS_H_
-#define DYNAMIC_SIGNALS_H_
+#ifndef CALLABLE_MODULE_H
+#define CALLABLE_MODULE_H
 
 // ======================================================
 // Includes
 // ======================================================
 
+#include "ICallableBase.h"
 #include <omnetpp.h>
+#include <stack>
 
 // ======================================================
 // Types
@@ -43,11 +45,20 @@
 // Declarations
 // ======================================================
 
-namespace DynamicSignals
+class cCallableModule : public cSimpleModule, public virtual ICallableBase
 {
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,                               const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName,  const int         ID,        const std::string SigName, const std::string TemplateName );
-    simsignal_t RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName );
-}
+    private:
+
+        // Resources
+        std::stack<cMethodCallContextSwitcher *>    ContextStack;
+
+    protected:
+
+    public:
+
+        // Callable API
+        void    EnterModuleSilent();
+        void    LeaveModule();
+};
 
 #endif

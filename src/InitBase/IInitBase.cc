@@ -30,14 +30,14 @@
 // Includes
 // ======================================================
 
-#include "DynamicSignals.h"
-
-// ======================================================
-// Definitions
-// ======================================================
+#include "IInitBase.h"
 
 // ======================================================
 // Types
+// ======================================================
+
+// ======================================================
+// Constants
 // ======================================================
 
 // ======================================================
@@ -52,48 +52,48 @@
 // Definitions
 // ======================================================
 
-namespace DynamicSignals
+// ------------------------------------------------------
+// Initialize
+// ------------------------------------------------------
+int
+IInitBase::numInitStages() const
 {
-    simsignal_t
-    InternalRegisterDynamicSignal( cModule *pModule, const std::string SigName, const std::string StatisticName, const std::string TemplateName )
-    {
-        simsignal_t     signal_id;
-        cProperty       *pStatTempProp;
-
-        signal_id       = pModule->registerSignal( SigName.c_str() );
-        pStatTempProp   = pModule->getProperties()->get( "statisticTemplate", TemplateName.c_str() );
-
-        ev.addResultRecorders( pModule, signal_id, StatisticName.c_str(), pStatTempProp );
-
-        return signal_id;
-    }
-
-    simsignal_t
-    RegisterDynamicSignal( cModule *pModule, const std::string BaseName, const std::string SigName, const std::string TemplateName )
-    {
-        std::string SignalName  = BaseName + "_" + SigName;
-
-        return  InternalRegisterDynamicSignal( pModule, SignalName, SignalName, TemplateName );
-    }
-
-    simsignal_t
-    RegisterDynamicSignal( cModule *pModule, const std::string BaseName, const int ID, const std::string SigName, const std::string TemplateName )
-    {
-        std::stringstream ss;
-
-        ss << BaseName << "_" << ID << "_" << SigName;
-
-        return  InternalRegisterDynamicSignal( pModule, ss.str(), ss.str(), TemplateName );
-    }
-
-    simsignal_t
-    RegisterDynamicSignal( cModule *pModule, const std::string BaseName1, const std::string BaseName2, const std::string SigName, const std::string TemplateName )
-    {
-        std::string SignalName  = BaseName1 + "_" + BaseName2 + "_" + SigName;
-
-        return  InternalRegisterDynamicSignal( pModule, SignalName, SignalName, TemplateName );
-    }
+    return static_cast<int>(InitStage::NUM_INIT_STAGES);
 }
 
+void
+IInitBase::initialize( int stage )
+{
+    InitStage initStage = static_cast<InitStage>(stage);
 
+    switch( initStage )
+    {
+        case InitStage::PARSE_RESOURCE_PARAMETERS:      ParseResourceParameters();  break;
+        case InitStage::ALLOCATE_RESOURCES:             AllocateResources();        break;
+        case InitStage::INIT_HIERARCHY:                 InitHierarchy();            break;
+        case InitStage::PARSE_PARAMETERS:               ParseParameters();          break;
+        case InitStage::REGISTER_SIGNALS:               RegisterSignals();          break;
+        case InitStage::INIT_INTERNAL_STATE:            InitInternalState();        break;
+        case InitStage::INIT_SIGNALS:                   InitSignals();              break;
+        case InitStage::FINISH_INIT:                    FinishInit();               break;
+        case InitStage::DEBUG_OUTPUT:                   PrintDebugOutput();
+                                                        break;
 
+        default:                                        throw cRuntimeError( "Unexpected init stage" );
+                                                        break;
+    }
+
+    switch( initStage )
+    {
+            case InitStage::PARSE_RESOURCE_PARAMETERS:  // Do not forward initial stages
+            case InitStage::ALLOCATE_RESOURCES:
+            case InitStage::INIT_HIERARCHY:
+                                                        break;
+
+            case InitStage::PARSE_PARAMETERS:           ForwardInit( static_cast<int>(InitStage::PARSE_RESOURCE_PARAMETERS) );
+                                                        ForwardInit( static_cast<int>(InitStage::ALLOCATE_RESOURCES       ) );
+                                                        ForwardInit( static_cast<int>(InitStage::INIT_HIERARCHY           ) );
+                                                                // Fall-through
+            default:                                    ForwardInit( stage );
+    }
+}
