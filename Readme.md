@@ -29,6 +29,7 @@ But these methods only support the case when one module directly calls another m
 They do not support the case when one module would like to call a subclass of another module.
 Consider the following pseudo-code:
 
+```c++
     clase A
     {
         public: void foo() {};   // <-- Can't call Enter_Method_Silent() here,
@@ -54,6 +55,7 @@ Consider the following pseudo-code:
 
         b->a.foo();   // <-- Directly calling a method from a child class of b
     }
+```
 
 The _Callable_ subproject provides helper functions to enable this scenario.
 
@@ -104,6 +106,7 @@ This can be the case if you extend modules provided by external libraries, like 
 In this case you have to inherit from `IInitBase` and make sure your implementations of `numInitStages()` and `initialize()` forward to the correct base classes.
 Consider as an example the following pseudo code:
 
+```c++
     // This is a class from an external library, and you can't change it.
     // You would like to inherit from it and use IInitBase.
     class ExternalModule: public cSimpleModule
@@ -136,6 +139,7 @@ Consider as an example the following pseudo code:
             IInitBase::initialize( stage );
         }
     }
+```
 
 ### ParameterParser
 
@@ -145,6 +149,7 @@ There is lots of room for improvement in the implementation of this subproject, 
 
 Pseudo code example:
 
+```c++
     // The enumeration you would like to use in your code
     enum MyType
     {
@@ -175,6 +180,7 @@ Pseudo code example:
 
     // Using the parser in your initialize routines (ParseParameters(), if you use InitBase):
     MyType  t = MyParser::ParseMyType( par( "MyTypeParameter" ).stringValue() );
+```
 
 Building
 ---------------------
