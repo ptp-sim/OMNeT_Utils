@@ -29,6 +29,7 @@ But these methods only support the case when one module directly calls another m
 They do not support the case when one module would like to call a subclass of another module.
 Consider the following pseudo-code:
 
+```c++
     clase A
     {
         public: void foo() {};   // <-- Can't call Enter_Method_Silent() here,
@@ -54,6 +55,7 @@ Consider the following pseudo-code:
 
         b->a.foo();   // <-- Directly calling a method from a child class of b
     }
+```
 
 The _Callable_ subproject provides helper functions to enable this scenario.
 
