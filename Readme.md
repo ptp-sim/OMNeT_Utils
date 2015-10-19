@@ -106,6 +106,7 @@ This can be the case if you extend modules provided by external libraries, like 
 In this case you have to inherit from `IInitBase` and make sure your implementations of `numInitStages()` and `initialize()` forward to the correct base classes.
 Consider as an example the following pseudo code:
 
+```c++
     // This is a class from an external library, and you can't change it.
     // You would like to inherit from it and use IInitBase.
     class ExternalModule: public cSimpleModule
@@ -138,6 +139,7 @@ Consider as an example the following pseudo code:
             IInitBase::initialize( stage );
         }
     }
+```
 
 ### ParameterParser
 
@@ -147,6 +149,7 @@ There is lots of room for improvement in the implementation of this subproject, 
 
 Pseudo code example:
 
+```c++
     // The enumeration you would like to use in your code
     enum MyType
     {
@@ -177,6 +180,7 @@ Pseudo code example:
 
     // Using the parser in your initialize routines (ParseParameters(), if you use InitBase):
     MyType  t = MyParser::ParseMyType( par( "MyTypeParameter" ).stringValue() );
+```
 
 Building
 ---------------------
