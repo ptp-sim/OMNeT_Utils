@@ -28,6 +28,9 @@
 
 package utils.Channels.VolatileDelayChannel;
 
+//
+// A volatile version of the DelayChannel
+//
 channel VolatileDelayChannel
 {
     parameters:
