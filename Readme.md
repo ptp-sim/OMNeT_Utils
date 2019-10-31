@@ -2,7 +2,6 @@
 Generic OMNeT++ Utilities
 ===============================
 
-
 Project description
 -------------------------------
 
@@ -24,7 +23,7 @@ This repository contains the following subprojects:
 
 In OMNeT++ modules usually communicate via message exchange.
 But sometimes it is more suitable that modules directly call each other.
-To support his, OMNeT++ provides the macros `Enter_Method()` and `Enter_Method_Silent()`.
+To support this, OMNeT++ provides the macros `Enter_Method()` and `Enter_Method_Silent()`.
 But these methods only support the case when one module directly calls another module.
 They do not support the case when one module would like to call a subclass of another module.
 Consider the following pseudo-code:
@@ -63,8 +62,9 @@ The _Callable_ subproject provides helper functions to enable this scenario.
 
 The _Channels_ subproject provides additional channel definitions.
 At the moment, it only provides a single channel: `VolatileDelayChannel`.
-This channel is meant to behave similar to OMNeT's own `DelayChannel`, but
+This channel is meant to behave similar to OMNeT++'s own `DelayChannel`, but
 the delay parameter is volatile, and thus re-read on every access.
+As a result, the delay of the channel can vary during the simulation run, instead of only being randomly selected at the beginning and then being constant for the rest of the simulation run.
 
 ### DynamicSignals
 
@@ -73,30 +73,37 @@ The _DynamicSignals_ subproject provides helper functions to make this a little 
 
 ### InitBase
 
-OMNeT++ provides an API for structured initialization, by using the functions `numInitStages()` and `initialize(stage)`.
-However, the tasks that are implemented in this stages are often the same: parsing parameters, registering signals, etc.
-Thus it makes sense to introduce a common initialization approach.
+OMNeT++ provides an API for structured initialization, by using the folloging functions:
+
+* `numInitStages()`: returns the number of required calls to `initialize(stage)`
+* `initialize(stage)`: initializes the stage given by the `stage` parameter
+
+However, the tasks which are implemented in this stages are often the same for many different modules: parsing parameters, registering signals, etc.
+This results in similar, yet different code in multiple places.
+
+To avoid code duplication and mistakes, it makes sense to introduce a common initialization approach.
 This is what the _InitBase_ subprojects does.
 The interface class `IInitBase` provides the following functions:
 
 * __ParseResourceParameters():__ Parse parameters that are required to allocate further resources.
 * __AllocateResources():__ Allocate required resources.
-* __InitHierarchy():__ Establish all needed parent-child relationships between this class and child classes.
+* __InitHierarchy():__ Establish all needed parent-child relationships between this class and child classes (e.g. a child class might need a pointer to its parent class).
 * __ParseParameters():__ Parse all remaining configuration parameters.
 * __RegisterSignals():__ Register signals.
 * __InitInternalState():__ Initialize a consistent state for this module depending on the configuration.
-* __InitSignals():__ If the semantic of signals makes sense on startup (e.g. the size of a queue could be 0 at startup), the initial signal values may be emitted here. After this stage it is allowed to use the module's signals.
-* __FinishInit():__ If the module needs to schedule event on startup or things like that, this should be done here.
+* __InitSignals():__ If the semantic of signals makes already sense on startup (e.g. the size of a queue could be 0 at startup), the initial signal values may be emitted here. After this stage it is allowed to use the module's signals.
+* __FinishInit():__ If the module needs to schedule events on startup or things like that, this should be done here.
 * __PrintDebugOutput():__ If the configuration tells the module to print initial debug output, this can be implemented here.
 
-* __ForwardInit( int stage ):__ In case that this module has child classes that implement the `IInitBase` interface, `ForwardInit()` has to call their `initialize(stage)` routine with its own `stage` parameter. `IInitBase` takes care that child classes are only initialized after the parent process is ready.
+* __ForwardInit( int stage ):__ In case that this module has child classes that also implement the `IInitBase` interface, `ForwardInit()` has to call their `initialize(stage)` routine with its own `stage` parameter. `IInitBase` takes care that child classes are only initialized after the parent process is ready.
 
 The _InitBase_ project provides the following helper classes:
 
 * __ModuleInitBase__: this is for simple modules and directly inherits from `cSimpleModule`.
-* __SubmoduleInitBase__: the purpose of this class is to introduce the `IInitBase` interface to classes that are used as childs from other moduls that support the interface. The parents `ForwardInit()` function is responsible to call the child's `initialize()`. On the other hand, the childs may rely on the parent for cSimpleModule-specific functions, like calilng `par()`.
+* __SubmoduleInitBase__: the purpose of this class is to introduce the `IInitBase` interface to classes that are used as childs from other moduls that support the interface.
+The parent's `ForwardInit()` function is responsible to call the child's `initialize()`. On the other hand, the childs may rely on the parent for cSimpleModule-specific functions, like calling `par()`.
 
-In case `ModuleInitBase` or `SubmoduleInitBase` are use, the following functions from the original OMNeT++ initialization API __should not__ be used otherwise anymore:
+In case `ModuleInitBase` or `SubmoduleInitBase` are used, the following functions from the original OMNeT++ initialization API __should not__ be used otherwise anymore:
 
 * __numInitStages()__
 * __initialize( int stage )__
@@ -107,7 +114,7 @@ In this case you have to inherit from `IInitBase` and make sure your implementat
 Consider as an example the following pseudo code:
 
 ```c++
-    // This is a class from an external library, and you can't change it.
+    // Suppose this is a class from an external library, and you can't change it.
     // You would like to inherit from it and use IInitBase.
     class ExternalModule: public cSimpleModule
     {
@@ -185,7 +192,7 @@ Pseudo code example:
 Building
 ---------------------
 
-See INSTALL.txt for details.
+See INSTALL.md for details.
 
 License
 ---------------------
