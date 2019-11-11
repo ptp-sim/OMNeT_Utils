@@ -2,6 +2,13 @@
 Generic OMNeT++ Utilities
 ===============================
 
+Project relationship
+-------------------------------
+
+This project is part of the **ptp-sim** project.
+See the [ptp-sim project page](https://ptp-sim.github.io/) for more information.
+There is also the [ptp-sim discussion forum](http://ptp-sim.boards.net) for further discussions.
+
 Project description
 -------------------------------
 
@@ -202,4 +209,4 @@ This project is licensed under the 3-clause BSD license. See the LICENSE.txt fil
 Contact
 ---------------------
 
-wolfgang-wallner [AT] gmx.at
+Please visit the [ptp-sim discussion forum](http://ptp-sim.boards.net) for further discussions.
