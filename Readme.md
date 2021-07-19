@@ -178,7 +178,7 @@ Pseudo code example:
         { MY_TYPE_OPTION_B, "MY_TYPE_OPTION_B" },
     };
 
-    // Your custom paramter parsing class
+    // Your custom parameter parsing class
     class MyParser
     {
         public:
