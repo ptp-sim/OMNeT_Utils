@@ -85,7 +85,7 @@ OMNeT++ provides an API for structured initialization, by using the folloging fu
 * `numInitStages()`: returns the number of required calls to `initialize(stage)`
 * `initialize(stage)`: initializes the stage given by the `stage` parameter
 
-However, the tasks which are implemented in this stages are often the same for many different modules: parsing parameters, registering signals, etc.
+However, the tasks which are implemented in these stages are often the same for many different modules: parsing parameters, registering signals, etc.
 This results in similar, yet different code in multiple places.
 
 To avoid code duplication and mistakes, it makes sense to introduce a common initialization approach.
